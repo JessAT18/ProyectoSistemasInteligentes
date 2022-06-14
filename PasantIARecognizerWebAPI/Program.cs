@@ -7,6 +7,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddCors(o => o.AddPolicy("AllowAnyOrigins", builder =>
+//{
+//    builder.AllowAnyOrigin()
+//    .AllowAnyMethod()
+//    .AllowAnyHeader();
+//}));
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(
+//    builder =>
+//    {
+//        builder.WithOrigins("https://localhost:7213/pasantia")
+//        .AllowAnyHeader()
+//        .AllowAnyMethod()
+//        .AllowCredentials();
+//    });
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,7 +35,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options => options.AllowAnyOrigin());
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+});
 
 app.UseHttpsRedirection();
 

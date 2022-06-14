@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
@@ -9,7 +10,6 @@ namespace PasantIARecognizerWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
     public class PasantiaController : Controller
     {
         //FORM RECOGNIZER
