@@ -2,19 +2,20 @@
 {
     public class PasantiaResponse
     {
-        private long Id { get; set; }
-        private String? Titulo { get; set; }
-        private String? Modalidad { get; set; }
-        private String? Requisitos { get; set; }
-        private String? Telefono { get; set; }
-        private String? Cargo { get; set; }
-        private String? Horario { get; set; }
-        private String? Correo { get; set; }
-        private String? NombreEmpresa { get; set; }
-        private String? Beneficios { get; set; }
-        private String? Objetivo { get; set; }
-        private String? Habilidades { get; set; }
-        private String? Funciones { get; set; }
-        private String? NombreContacto { get; set; }
+        public long Id { get; set; }
+        public String? Titulo { get; set; }
+        public String? Ubicacion { get; set; }
+        public String? Modalidad { get; set; }
+        public String? Requisitos { get; set; }
+        public String? Telefono { get; set; }
+        public String? Cargo { get; set; }
+        public String? Horario { get; set; }
+        public String? Correo { get; set; }
+        public String? NombreEmpresa { get; set; }
+        public String? Beneficios { get; set; }
+        public String? Objetivo { get; set; }
+        public String? Habilidades { get; set; }
+        public String? Funciones { get; set; }
+        public String? NombreContacto { get; set; }
     }
 }

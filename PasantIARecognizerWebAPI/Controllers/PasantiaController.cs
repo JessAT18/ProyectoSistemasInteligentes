@@ -5,20 +5,20 @@ using PasantIARecognizerWebAPI.Models;
 
 namespace PasantIARecognizerWebAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+
     public class PasantiaController : Controller
     {
         private static readonly string endpoint = "https://jessformrecognizer.cognitiveservices.azure.com/";
         private static readonly string apiKey = "0bd31f6a8ad74efa95376576886179e4";
-        private static readonly AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-        public IActionResult Index()
-        {
-            return View();
-        }
+        private static readonly string modelId = "PasantIA";
 
-        [HttpGet(Name = "EjecutarPasantia")]
-        public async Task<PasantiaResponse> EjecutarPasantIARecognizerAsync(String uriBlobStorage)
+        private static readonly AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+
+        [HttpGet(Name = "EjecutarPasantIARecognizer")]
+        public async Task<PasantiaResponse> EjecutarPasantIARecognizerAsync(string uriBlobStorage)
         {
-            string modelId = "PasantIA";
             Uri fileUri = new Uri(uriBlobStorage);
             IDictionary<string, string> pasantia = new Dictionary<string, string>();
 
@@ -28,37 +28,26 @@ namespace PasantIARecognizerWebAPI.Controllers
             Response<AnalyzeResult> operationResponse = await operation.WaitForCompletionAsync();
             AnalyzeResult result = operationResponse.Value;
 
-            //foreach (AnalyzedDocument document in result.Documents)
-            //{
-            //    Console.WriteLine($"Form of type: {form.FormType}");
-            //    Console.WriteLine($"Form was analyzed with model with ID: {modelId}");
-            //    foreach (FormField field in form.Fields.Values)
-            //    {
-            //        pasantia.Add(field.Name, field.ValueData.Text);
-            //    }
-            //}
+            PasantiaResponse response = new PasantiaResponse();
 
-            foreach (AnalyzedDocument document in result.Documents)
-            {
-                Console.WriteLine($"Document of type: {document.DocType}");
+            var a = result.Documents[0].Fields;
 
-                foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
-                {
-                    string fieldName = fieldKvp.Key;
-                    DocumentField field = fieldKvp.Value;
+            response.Titulo = a.First(kvp => kvp.Key == "Titulo").Value.Content;
+            response.Ubicacion = a.First(kvp => kvp.Key == "Ubicacion").Value.Content;
+            response.Modalidad = a.First(kvp => kvp.Key == "Modalidad").Value.Content;
+            response.Requisitos = a.First(kvp => kvp.Key == "Requisitos").Value.Content;
+            response.Telefono = a.First(kvp => kvp.Key == "Telefono").Value.Content;
+            response.Cargo = a.First(kvp => kvp.Key == "Cargo").Value.Content;
+            response.Horario = a.First(kvp => kvp.Key == "Horario").Value.Content;
+            response.Correo = a.First(kvp => kvp.Key == "Correo").Value.Content;
+            response.NombreEmpresa = a.First(kvp => kvp.Key == "NombreEmpresa").Value.Content;
+            response.Requisitos = a.First(kvp => kvp.Key == "Requisitos").Value.Content;
+            response.Beneficios = a.First(kvp => kvp.Key == "Beneficios").Value.Content;
+            response.Objetivo = a.First(kvp => kvp.Key == "Objetivo").Value.Content;
+            response.Habilidades = a.First(kvp => kvp.Key == "Habilidades").Value.Content;
+            response.Funciones = a.First(kvp => kvp.Key == "Funciones").Value.Content;
 
-                    Console.WriteLine($"Field '{fieldName}': ");
-
-                    Console.WriteLine($"  Content: '{field.Content}'");
-                    Console.WriteLine($"  Confidence: '{field.Confidence}'");
-                }
-            }
-
-            foreach (KeyValuePair<string, string> dato in pasantia)
-            {
-                Console.WriteLine("{0}: {1}",
-                dato.Key, dato.Value);
-            }
+            return response;
         }
     }
 }
