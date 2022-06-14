@@ -2,7 +2,7 @@
 {
     public class PasantiaResponse
     {
-        public long Id { get; set; }
+        public String id { get; set; }
         public String? Titulo { get; set; }
         public String? Ubicacion { get; set; }
         public String? Modalidad { get; set; }
